@@ -1,0 +1,13 @@
+local payload = loadstring("return"..ARGV[1])()
+local result = redis.call("PUBLISH",payload.publishto,payload.msg)
+
+
+if result==0 then
+	redis.call('SADD','MSGBOX',payload.msg)
+	return 'stored messages:  '..ARGV[1]
+else
+	return 'consumed messages:  '..ARGV[1]
+end			
+
+
+	
